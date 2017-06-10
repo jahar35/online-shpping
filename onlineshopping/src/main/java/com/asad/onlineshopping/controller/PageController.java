@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.asad.shoppingbackend.dao.CategoryDAO;
+import com.asad.shoppingbackend.dto.Category;
 
 @Controller
 public class PageController {
@@ -62,7 +63,7 @@ public class PageController {
 	 * Method to load all the product and based on category
 	 */
 
-	@RequestMapping(value={"/show/all/products","/home","/index"})
+	@RequestMapping(value={"/show/all/products"})
 	public ModelAndView showAllProducts(){
 		ModelAndView mv=new ModelAndView("page");
 		mv.addObject("title", "All Products");
@@ -71,12 +72,16 @@ public class PageController {
 		return mv;
 	}
 	
-	@RequestMapping(value={"/show/category/{id}/products{}","/home","/index"})
+	@RequestMapping(value={"/show/category/{id}/products"})
 	public ModelAndView showCateoryProducts(@PathVariable ("id") int id){
 		ModelAndView mv=new ModelAndView("page");
-		mv.addObject("title", "All Products");
+		Category category=null;
+		category=categoryDAO.get(id);
+		mv.addObject("category", category);
+		mv.addObject("title", category.getName());
 		mv.addObject("categories", categoryDAO.list());
-		mv.addObject("userClickAllProducts", true);
+		mv.addObject("category", category);
+		mv.addObject("userClickCategoryProducts", true);
 		return mv;
 	}
 }

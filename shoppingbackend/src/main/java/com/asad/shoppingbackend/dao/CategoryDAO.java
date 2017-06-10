@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.asad.shoppingbackend.dto.Category;
 
-public interface CategoryDAO {
+public interface CategoryDAO
+{
  List<Category> list();
+ Category get(int id);
 }
